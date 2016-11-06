@@ -1675,9 +1675,9 @@
 <td style="text-align: left">RESTORE is the type a server uses when restoring a backup, at startup time.  No queries can be served in RESTORE mode.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code>WORKER</code></td>
+<td style="text-align: left"><code>DRAINED</code></td>
 <td style="text-align: left"><code>8</code></td>
-<td style="text-align: left">WORKER is the type a server goes into when used by a vtworker process to perform an offline action. It is a serving type (as the vtworker processes may need queries to run). In this state, this tablet is dedicated to the vtworker process that uses it.</td>
+<td style="text-align: left">DRAINED is the type a server goes into when a process needs a separate tablet set aside for a specific action. For example, a vtworker process may set a tablet to drained to perform an offline action. It is a serving type (as the vtworker processes may need queries to run). In this state, this tablet is dedicated to the background process that uses it.</td>
 </tr>
 </tbody></table>
 

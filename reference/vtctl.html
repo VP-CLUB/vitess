@@ -584,7 +584,7 @@
 <li><code>schema_apply</code> &ndash; A slaved copy of data that had been serving query traffic but that is now applying a schema change. Following the change, the tablet will revert to its serving type.</li>
 <li><code>snapshot_source</code> &ndash; A slaved copy of data where mysqld is <b>not</b> running and where Vitess is serving data files to clone slaves. Use this command to enter this mode: <pre>vtctl Snapshot -server-mode ...</pre> Use this command to exit this mode: <pre>vtctl SnapshotSourceEnd ...</pre></li>
 <li><code>spare</code> &ndash; A slaved copy of data that is ready but not serving query traffic. The data could be a potential master tablet.</li>
-<li><code>worker</code> &ndash; A tablet that is in use by a vtworker process. The tablet is likely lagging in replication.</li>
+<li><code>drained</code> &ndash; A tablet that is reserved for a background process. For example, a tablet used by a vtworker process, where the tablet is likely lagging in replication.</li>
 </ul></li>
 </ul>
 
@@ -2356,7 +2356,7 @@
 
 <h4 id="example">Example</h4>
 
-<pre class="command-example">DeleteShard [-recursive] &lt;keyspace/shard&gt; ...</pre>
+<pre class="command-example">DeleteShard [-recursive] [-even_if_serving] &lt;keyspace/shard&gt; ...</pre>
 
 <h4 id="flags">Flags</h4>
 
@@ -2367,6 +2367,11 @@
 <th style="text-align: left">Definition</th>
 </tr>
 </thead><tbody>
+<tr>
+<td style="text-align: left">even_if_serving</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Remove the shard even if it is serving. Use with caution.</td>
+</tr>
 <tr>
 <td style="text-align: left">recursive</td>
 <td style="text-align: left">Boolean</td>
@@ -3646,11 +3651,11 @@
 
 <h3 id="workflowcreate">WorkflowCreate</h3>
 
-<p>Creates the workflow with the provided parameters. The workflow is also started, unless -nostart is specified.</p>
+<p>Creates the workflow with the provided parameters. The workflow is also started, unless -skip_start is specified.</p>
 
 <h4 id="example">Example</h4>
 
-<pre class="command-example">WorkflowCreate [-nostart] &lt;factoryName&gt; [parameters...]</pre>
+<pre class="command-example">WorkflowCreate [-skip_start] &lt;factoryName&gt; [parameters...]</pre>
 
 <h4 id="flags">Flags</h4>
 
@@ -3662,9 +3667,9 @@
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: left">start</td>
+<td style="text-align: left">skip_start</td>
 <td style="text-align: left">Boolean</td>
-<td style="text-align: left">If set, the workflow will also be started.</td>
+<td style="text-align: left">If set, the workflow will not be started.</td>
 </tr>
 </tbody></table>
 
